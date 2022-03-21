@@ -1,0 +1,60 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 64px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.header {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+	color: white;
+}
+
+.bio {
+  text-align: center;
+  color: gray;
+  margin-top: 16px;
+}
+
+.connectMessage {
+  text-align: center;
+  color: white;
+  margin-top: 16px;
+	font-size: 20px;
+  font-weight: 600;
+}
+
+.waveButton {
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.waveButtonProcessing {
+  margin-top: 16px;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+	color: white;
+}
+
+.waveCounter {
+	padding-top: 10px;
+	font-weight: bold;
+	color: white;
+}
+
+html {
+  background-color: black
+}
