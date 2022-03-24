@@ -39,6 +39,7 @@
   padding: 8px;
   border: 0;
   border-radius: 5px;
+	width: 100%;
 }
 
 .waveButtonProcessing {
@@ -47,12 +48,34 @@
   border: 0;
   border-radius: 5px;
 	color: white;
+	width: 100%;
 }
 
 .waveCounter {
 	padding-top: 10px;
 	font-weight: bold;
 	color: white;
+	margin-top: 50px;
+}
+
+.waveTable {
+	font-weight: bold;
+	color: white;
+	margin-top: 25px;
+}
+
+input[type="submit"][disabled] {
+	color:white;
+	cursor: not-allowed;
+}
+
+table, th, td {
+	border: 1px solid white;
+	border-collapse: collapse;
+}
+
+textarea {
+	width: 100%;
 }
 
 html {
