@@ -1,4 +1,9 @@
-## Running React on Repl.it
+## Wave Portal Starter Project
+
+This is the front-end codebase that corresponds to the my-wave-portal repository. This code is hosted by Repl.it web
+server and should be live at https://waveportal-starter-project.ugongetthisword.repl.co/.
+
+### Running React on Repl.it
 
 [React](https://reactjs.org/) is a popular JavaScript library for building user interfaces.
 
