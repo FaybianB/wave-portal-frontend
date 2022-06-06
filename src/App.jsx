@@ -6,7 +6,7 @@ import abi from "./utils/WavePortal.json";
 export default function App() {
     const [currentAccount, setCurrentAccount] = useState("");
     const [message, setMessage] = useState("");
-    const [totalWaves, setTotalWaves] = useState(0);
+    const [totalWaveCount, setTotalWaveCount] = useState(0);
     const [allWaves, setAllWaves] = useState([]);
     const [isProcessingTransaction, setIsProcessingTransaction] = useState(false);
     const contractAddress = "0x225f20BC3ABe60A385C6577701F6F2B6f6953435";
@@ -35,9 +35,8 @@ export default function App() {
                 console.log("Found an authorized account:", account);
 
                 setCurrentAccount(account);
-
-                getTotalWaves();
-                getAllWaves();
+                
+                verifyChain();
             } else {
                 console.log("No authorized account found")
             }
@@ -61,9 +60,8 @@ export default function App() {
             console.log("Connected", accounts[0]);
 
             setCurrentAccount(accounts[0]);
-
-            getTotalWaves();
-            getAllWaves();
+            
+            verifyChain();
         } catch (error) {
             console.log(error)
         }
@@ -78,6 +76,8 @@ export default function App() {
             const { ethereum } = window;
 
             if (ethereum) {
+                await verifyChain(ethereum);
+                
                 const wavePortalContract = getContract(ethereum);
 
                 // Execute the actual wave from smart contract
@@ -89,7 +89,8 @@ export default function App() {
 
                 setMessage('');
 
-                getTotalWaves();
+                getTotalWaveCount();
+                
                 getAllWaves();
             } else {
                 console.log("Ethereum object doesn't exist!");
@@ -101,7 +102,7 @@ export default function App() {
         setIsProcessingTransaction(false);
 	};
 
-	const getTotalWaves = async () => {
+	const getTotalWaveCount = async () => {
         try {
             const { ethereum } = window;
 
@@ -111,7 +112,7 @@ export default function App() {
 
                 console.log("Retrieved total wave count...", count.toNumber());
 
-                setTotalWaves(count.toNumber());
+                setTotalWaveCount(count.toNumber());
             } else {
                 console.log("Ethereum object doesn't exist!");
             }
@@ -147,6 +148,27 @@ export default function App() {
         }
     };
 
+    const verifyChain = async () => {
+        let chainId = await ethereum.request({ method: 'eth_chainId' });
+        
+        console.log("Connected to chain " + chainId);
+        
+        // String, hex code of the chainId of the Rinkebey test network
+        const rinkebyChainId = "0x4"; 
+        
+        if (chainId !== rinkebyChainId) {
+            const wrongChainError = "You are not connected to the Rinkeby Test Network!";
+            
+            alert(wrongChainError);
+
+            throw wrongChainError;
+        } else {
+            getTotalWaveCount();
+            
+            getAllWaves();
+        }
+    };
+    
     const getContract = (ethereum) => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
@@ -161,8 +183,10 @@ export default function App() {
             console.log('wallet disconnected');
 
             setCurrentAccount('');
+            
             setAllWaves([]);
-            setTotalWaves(0);
+            
+            setTotalWaveCount(0);
         } else {
             const account = accounts[0];
 
@@ -177,6 +201,7 @@ export default function App() {
         const wavePortalContract = getContract(ethereum);
 
         ethereum.on('accountsChanged', handleAccountChange);
+        ethereum.on('chainChanged', verifyChain);        
 
         // Listen for new wave transactions by other users.
         const onNewWave = (from, timestamp, message) => {
@@ -242,7 +267,7 @@ export default function App() {
                                     }
                                 />
                             </form>
-                            <span className="waveCounter">Total Number of Waves: {totalWaves}</span>
+                            <span className="waveCounter">Total Number of Waves: {totalWaveCount}</span>
                         </>
                     :
                         <>
