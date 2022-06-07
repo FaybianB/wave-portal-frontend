@@ -9,7 +9,7 @@ export default function App() {
     const [totalWaveCount, setTotalWaveCount] = useState(0);
     const [allWaves, setAllWaves] = useState([]);
     const [isProcessingTransaction, setIsProcessingTransaction] = useState(false);
-    const contractAddress = "0x225f20BC3ABe60A385C6577701F6F2B6f6953435";
+    const contractAddress = "0x34681A1c206bf08F17395B2724690634d3d45096";
     const contractABI = abi.abi;
 	
 	const checkIfWalletIsConnected = async () => {
@@ -24,9 +24,7 @@ export default function App() {
 
             console.log("We have the ethereum object", ethereum);
 
-            /*
-            * Check if we're authorized to access the user's wallet
-            */
+            // Check if we're authorized to access the user's wallet
             const accounts = await ethereum.request({ method: "eth_accounts" });
 
             if (accounts.length !== 0) {
@@ -108,7 +106,7 @@ export default function App() {
 
             if (ethereum) {
                 const wavePortalContract = getContract(ethereum);
-                const count = await wavePortalContract.getTotalWaves();
+                const count = await wavePortalContract.getTotalWaveCount();
 
                 console.log("Retrieved total wave count...", count.toNumber());
 
